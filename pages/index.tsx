@@ -1,7 +1,7 @@
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -19,4 +19,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;
