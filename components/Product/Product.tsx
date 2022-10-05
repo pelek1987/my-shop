@@ -4,9 +4,11 @@ import { ProductProps } from "./Product.types";
 const Product = ({ data }: ProductProps) => {
   return (
     <>
-      <img src={data.thumbnailUrl} alt={data.thumbnailAlt} />
+      <section>
+        <img src={data.thumbnailUrl} alt={data.thumbnailAlt} />
+        <Rating rating={data.rating} />
+      </section>
       <p>{data.description}</p>
-      <Rating rating={data.rating} />
     </>
   );
 };
