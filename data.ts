@@ -1,4 +1,6 @@
 export const DATA = {
+  id: 1,
+  title: 'Sialalala',
   description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
     exercitationem libero molestias nemo, magni debitis. Suscipit fugit
     numquam, /sed dolorem ab, voluptatem repellendus voluptate vero dolorum
