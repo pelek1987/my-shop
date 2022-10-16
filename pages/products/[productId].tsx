@@ -1,6 +1,6 @@
-import {GetStaticPropsContext, InferGetStaticPropsType} from "next";
+import {InferGetStaticPropsType} from "next";
 import {ProductDetails} from "../../components/Product";
-import {InferGetStaticPaths} from "../../types/infer-get-static-paths";
+import {InferGetStaticPathsType} from "../../types/infer-get-static-paths";
 import Link from "next/link";
 import {StoreApiResponse} from "../../types/api";
 
@@ -46,9 +46,9 @@ export const getStaticPaths = async () => {
     }
 }
 
-export const getStaticProps = async ({ params }: GetStaticPropsContext<
-    InferGetStaticPaths<typeof getStaticPaths>
-    >) => {
+export const getStaticProps = async ({ params }:
+    InferGetStaticPathsType<typeof getStaticPaths>
+) => {
 
     if(!params?.productId) {
         return {
