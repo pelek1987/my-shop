@@ -12,7 +12,8 @@
     "next": "12.2.5",
     "react": "17",
     "react-dom": "17",
-    "react-query": "^3.39.2"
+    "react-query": "^3.39.2",
+    "sharp": "^0.31.1"
   },
   "devDependencies": {
     "@types/node": "^18.7.16",
