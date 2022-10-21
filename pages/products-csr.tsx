@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {ProductDetails} from "../components/Product";
 import {StoreApiResponse} from "../types/api";
+import {PaginationItem} from "../components/PaginationItem";
 
 const PAGES_COUNT = 10;
 const ITEMS_PER_PAGE = 25;
@@ -42,16 +43,9 @@ const ProductsCSRPage = () => {
             <div className="flex flex-row justify-center mt-4">
                 <nav className="border-t border-gray-200 px-4 flex items-center justify-between sm:px-0">
                     <div className="hidden md:-mt-px md:flex">
-                        {[...new Array(PAGES_COUNT)].map((item, idx) => {
+                        {[...Array(PAGES_COUNT)].map((item, idx) => {
                             const pageId = idx + 1;
-                            return (
-                                <a key={`page-${pageId}`}
-                                    className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium"
-                                   onClick={() => setCurrentPage(pageId)}
-                                >
-                                    {pageId}
-                                </a>
-                            )
+                            return <PaginationItem key={`page-${pageId}`} pageId={pageId} onPageChange={() => setCurrentPage(pageId)} />
                         })}
                     </div>
                 </nav>
