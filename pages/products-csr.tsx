@@ -1,16 +1,16 @@
 import {ProductDetails} from "../components/Product";
-import {useQuery} from "react-query";
+import {useQuery} from "@tanstack/react-query";
 import {StoreApiResponse} from "../types/api";
 
 const getProducts = async () => {
-    const res = await fetch('https://fakestoreapi.com/products/');
+    const res = await fetch('https://naszsklep-api.vercel.app/api/products');
     const data: StoreApiResponse[] = await res.json();
 
     return data;
 }
 
 const ProductsCSRPage = () => {
-    const {data, isLoading, isError} = useQuery('products', getProducts);
+    const {data, isLoading, isError} = useQuery(['products'], getProducts);
 
     if(isLoading) {
         return <div>Loading ...</div>
