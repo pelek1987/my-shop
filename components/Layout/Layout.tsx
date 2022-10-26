@@ -1,19 +1,22 @@
 import {ReactNode} from "react";
 import {Header} from "../Header";
 import {Footer} from "../Footer";
+import Head from "next/head";
 
-interface LayoutProps {
+const Layout = ({children}: {
     children: ReactNode;
-}
-
-const Layout = ({children}: LayoutProps) => {
+}) => {
     return (
         <div className="flex flex-col min-h-screen">
-            <Header />
+            <Head>
+                <title>My Shop</title>
+                <meta name="description" content="Sialalala" />
+            </Head>
+            <Header/>
             <div className="flex-grow">
                 {children}
             </div>
-            <Footer />
+            <Footer/>
         </div>
     );
 }

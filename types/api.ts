@@ -3,6 +3,7 @@ export interface StoreApiResponse {
     title: string;
     price: number;
     description: string;
+    longDescription: string;
     image: string;
     rating: {
         rate: number;

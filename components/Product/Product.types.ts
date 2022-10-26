@@ -2,6 +2,7 @@ export interface Product {
     id: number;
     title: string;
     description: string;
+    longDescription: string
     thumbnailUrl: string;
     thumbnailAlt: string;
     rating: number;
