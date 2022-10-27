@@ -35,6 +35,7 @@ const ProductsCSRPage = () => {
                     id: product.id,
                     title: product.title,
                     description: product.description,
+                    longDescription: product.longDescription,
                     thumbnailUrl: product.image,
                     thumbnailAlt: product.title,
                     rating: product.rating.rate

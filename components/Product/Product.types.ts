@@ -4,7 +4,7 @@ export interface Product {
     id: number;
     title: string;
     description: string;
-    longDescription?: MarkdownResult
+    longDescription: MarkdownResult
     thumbnailUrl: string;
     thumbnailAlt: string;
     rating: number;
