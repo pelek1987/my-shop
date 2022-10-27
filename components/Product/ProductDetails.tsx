@@ -1,8 +1,8 @@
 import Image from "next/image";
-import ReactMarkdown from 'react-markdown'
 import {Rating} from "../Rating";
 import {Product} from './Product.types'
 import {NextSeo} from "next-seo";
+import {CustomMarkdownComponent} from "../CustomMarkdownComponent";
 
 export interface ProductDetailsProps {
     data: Product
@@ -42,9 +42,9 @@ const ProductDetails = ({data}: ProductDetailsProps) => {
             <h2 className="p-4 text-2xl font-bold">{data.title}</h2>
             <p className="p-4">{data.description}</p>
             <p className="p-4">
-                <ReactMarkdown>
+                <CustomMarkdownComponent>
                     {data.longDescription}
-                </ReactMarkdown>
+                </CustomMarkdownComponent>
             </p>
             <Rating rating={data.rating}/>
         </>
