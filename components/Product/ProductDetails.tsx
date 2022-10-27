@@ -41,11 +41,11 @@ const ProductDetails = ({data}: ProductDetailsProps) => {
             </div>
             <h2 className="p-4 text-2xl font-bold">{data.title}</h2>
             <p className="p-4">{data.description}</p>
-            <p className="p-4">
+            <div className="p-4">
                 <CustomMarkdownComponent>
                     {data.longDescription}
                 </CustomMarkdownComponent>
-            </p>
+            </div>
             <Rating rating={data.rating}/>
         </>
     );
