@@ -73,7 +73,7 @@ export const getStaticProps = async (
         props: {
             data: {
                 ...data,
-                longDescription: await serialize(data.longDescription)
+                longDescription: await serialize('[Duck Duck Go](https://duckduckgo.com)')
             }
         }
     }
