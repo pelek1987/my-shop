@@ -1,6 +1,7 @@
 import { ProductTitleAndImage } from './Product.types'
 import Link from "next/link";
 import Image from "next/image";
+import {AppRoutes} from "../../types/app-routes";
 
 interface ProductListItemProps {
     data: ProductTitleAndImage
@@ -19,7 +20,7 @@ const ProductListItem = ({ data}: ProductListItemProps) => {
                     objectFit={'contain'}
                 />
             </div>
-            <Link href={`/products/${data.id}`}>
+            <Link href={`${AppRoutes.PRODUCTS}/${data.id}`}>
                 <a>
                     <h2 className="p-4 text-2xl font-bold">{data.title}</h2>
                 </a>

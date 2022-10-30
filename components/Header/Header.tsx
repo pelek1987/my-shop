@@ -1,19 +1,26 @@
 import Link from "next/link";
+import {CartBar} from "../Cart";
+import {AppRoutes} from "../../types/app-routes";
 
 const Header = () => (
-  <header className="max-w-screen-md mx-auto w-full">
-    <nav className="flex gap-3 bg-gray-700 text-white px-4 py-2">
-      <Link href="/">
-        <a>Home</a>
-      </Link>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-     <Link href="/products">
-         <a>Products</a>
-     </Link>
-    </nav>
-  </header>
+    <Link href={AppRoutes.CART}>
+        <a>
+            <header className="max-w-screen-md mx-auto w-full flex items-center justify-between bg-gray-700 px-4">
+                <nav className="flex gap-3 text-white px-4 py-2">
+                    <Link href={AppRoutes.HOME}>
+                        <a>Home</a>
+                    </Link>
+                    <Link href={AppRoutes.ABOUT}>
+                        <a>About</a>
+                    </Link>
+                    <Link href={AppRoutes.PRODUCTS}>
+                        <a>Products</a>
+                    </Link>
+                </nav>
+                <CartBar/>
+            </header>
+        </a>
+    </Link>
 );
 
 export default Header;
