@@ -4,7 +4,7 @@ import "../styles/globals.css";
 import {Layout} from "../components/Layout";
 import {DefaultSeo} from "next-seo";
 import SEO from '../next-seo.config';
-import CartContextProvider from "../components/Cart/CartContext";
+import { CartContextProvider } from "../components/Cart";
 
 const client = new QueryClient();
 
