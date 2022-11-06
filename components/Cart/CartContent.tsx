@@ -7,7 +7,7 @@ const CartContent = () => {
     return (
         <div className="col-span-2">
             <ul className="divide-y divide-gray-200">
-                {cartContext.items.map((item, idx) => <li
+                {cartContext.items?.map((item, idx) => <li
                     className="py-4"
                     key={`${item.title}-${idx}`}
                 >

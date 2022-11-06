@@ -6,7 +6,7 @@ export interface CartItem {
 }
 
 export interface CartState {
-    items: readonly CartItem[];
+    items: readonly CartItem[] | undefined;
     addItemToCart: (item: CartItem) => void;
     removeItemFromCart: (id: CartItem['id']) => void
 }

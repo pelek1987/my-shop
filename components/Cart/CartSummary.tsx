@@ -6,7 +6,7 @@ const CartSummary = () => {
     return (
         <div>
             <h2>Cart Summary:</h2>
-            <div className="font-bold">Liczba elementów: {cartContext.items.length}</div>
+            <div className="font-bold">Liczba elementów: {cartContext.items?.length}</div>
         </div>
     );
 }
