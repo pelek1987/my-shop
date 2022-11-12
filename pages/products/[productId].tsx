@@ -4,6 +4,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 import {StoreApiResponse} from "../../types/api";
 import {InferGetStaticPathsType} from "../../types/infer-get-static-paths";
 import {ProductDetails} from "../../components/Product";
+import {AppRoutes} from "../../types/app-routes";
 
 const ProductDetailsPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
@@ -13,7 +14,7 @@ const ProductDetailsPage = ({ data }: InferGetStaticPropsType<typeof getStaticPr
 
     return (
         <>
-            <Link href={'/products'}>
+            <Link href={AppRoutes.PRODUCTS}>
                 <a>Go back to products page</a>
             </Link>
             <ProductDetails
