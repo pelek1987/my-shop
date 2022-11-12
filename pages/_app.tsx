@@ -5,6 +5,8 @@ import {Layout} from "../components/Layout";
 import {DefaultSeo} from "next-seo";
 import SEO from '../next-seo.config';
 import { CartContextProvider } from "../components/Cart";
+import {ApolloProvider} from "@apollo/client";
+import {apolloClient} from "../graphql/apolloClient";
 
 const client = new QueryClient();
 
@@ -14,9 +16,11 @@ const MyApp = ({Component, pageProps}: AppProps) => {
             <DefaultSeo {...SEO} />
             <CartContextProvider>
                 <Layout>
-                    <QueryClientProvider client={client}>
-                        <Component {...pageProps} />
-                    </QueryClientProvider>
+                    <ApolloProvider client={apolloClient}>
+                        <QueryClientProvider client={client}>
+                            <Component {...pageProps} />
+                        </QueryClientProvider>
+                    </ApolloProvider>
                 </Layout>
             </CartContextProvider>
         </div>
