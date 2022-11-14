@@ -1,7 +1,7 @@
 import {MarkdownResult} from "../../types/utils";
 
 export interface Product {
-    id: number;
+    id: string;
     title: string;
     description: string;
     longDescription: MarkdownResult
