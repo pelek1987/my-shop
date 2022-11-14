@@ -1,23 +1,10 @@
 import {Main} from "../components/Main";
-import {gql, useQuery} from "@apollo/client";
-
-const GET_ALL_PRODUCTS_QUERY = gql`
-  query GetAllProducts {
-    products {
-        id
-        name
-        price
-        slug
-        images {
-            url
-        }
-    }
-   }
- `;
+import {useQuery} from "@apollo/client";
+import {GetAllProductsDocument} from "../graphql/generated/graphql";
 
 
 const HomePage = () => {
-    const {data, loading, error} = useQuery(GET_ALL_PRODUCTS_QUERY);
+    const {data, loading, error} = useQuery(GetAllProductsDocument);
 
     if (loading) return <Main><p>Loading...</p></Main>
 

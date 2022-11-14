@@ -4,8 +4,14 @@ import {serialize} from 'next-mdx-remote/serialize'
 import {InferGetStaticPathsType} from "../../types/infer-get-static-paths";
 import {ProductDetails} from "../../components/Product";
 import {AppRoutes} from "../../types/app-routes";
-import {gql} from "@apollo/client";
 import {apolloClient} from "../../graphql/apolloClient";
+import {
+    GetProductDetailsBySlugDocument,
+    GetProductDetailsBySlugQuery,
+    GetProductDetailsBySlugQueryVariables,
+    GetProductsSlugsDocument,
+    GetProductsSlugsQuery,
+} from "../../graphql/generated/graphql";
 
 const ProductDetailsPage = ({data}: InferGetStaticPropsType<typeof getStaticProps>) => {
 
@@ -35,26 +41,15 @@ const ProductDetailsPage = ({data}: InferGetStaticPropsType<typeof getStaticProp
 
 export default ProductDetailsPage;
 
-const GET_PRODUCTS_SLUGS_QUERY = gql`
-  query GetAllProducts {
-    products {
-        slug
-    }
-   }
- `;
-
-interface GetPorductsSlugsResponse {
-    products: {
-        slug: string;
-    }[]
-}
-
 export const getStaticPaths = async () => {
 
     const {data} = await apolloClient
-        .query<GetPorductsSlugsResponse>({
-            query: GET_PRODUCTS_SLUGS_QUERY,
+        .query<GetProductsSlugsQuery>({
+            query: GetProductsSlugsDocument,
         });
+    if(!data.products) {
+
+    }
 
     return {
         paths: data.products.map(product => ({
@@ -64,38 +59,6 @@ export const getStaticPaths = async () => {
         })),
         fallback: false,
     }
-}
-
-const GET_PRODUCT_DETAILS_BY_SLUG_QUERY = gql`
-  query GetProductDetailsBySlug($slug: String) {
-    product(where: {slug: $slug}) {
-        id
-        slug
-        name
-        description
-        images {
-            url
-         }
-        price
-    }
-    }
-`;
-
-interface GetProductDetailsBySlugQueryResponse {
-    product: Product
-}
-
-interface Product {
-    id: string,
-    slug: string;
-    name: string;
-    description: string;
-    images: ProductImage[],
-    price: number;
-}
-
-interface ProductImage {
-    url: string;
 }
 
 export const getStaticProps = async (
@@ -110,14 +73,14 @@ export const getStaticProps = async (
     }
 
     const {data} = await apolloClient
-        .query<GetProductDetailsBySlugQueryResponse>({
+        .query<GetProductDetailsBySlugQuery, GetProductDetailsBySlugQueryVariables>({
             variables: {
               slug: params.productId
             },
-            query: GET_PRODUCT_DETAILS_BY_SLUG_QUERY,
+            query: GetProductDetailsBySlugDocument,
         });
 
-    if (!data) {
+    if (!data.product) {
         return {
             notFound: true,
             props: {}
