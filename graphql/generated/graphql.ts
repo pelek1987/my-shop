@@ -10674,6 +10674,13 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
+export type CreatProductReviewMutationVariables = Exact<{
+  review: ReviewCreateInput;
+}>;
+
+
+export type CreatProductReviewMutation = { __typename?: 'Mutation', createReview?: { __typename?: 'Review', id: string } | null };
+
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -10692,6 +10699,39 @@ export type GetProductDetailsBySlugQueryVariables = Exact<{
 export type GetProductDetailsBySlugQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, description: string, price: number, images: Array<{ __typename?: 'Asset', url: string }> } | null };
 
 
+export const CreatProductReviewDocument = gql`
+    mutation CreatProductReview($review: ReviewCreateInput!) {
+  createReview(data: $review) {
+    id
+  }
+}
+    `;
+export type CreatProductReviewMutationFn = Apollo.MutationFunction<CreatProductReviewMutation, CreatProductReviewMutationVariables>;
+
+/**
+ * __useCreatProductReviewMutation__
+ *
+ * To run a mutation, you first call `useCreatProductReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatProductReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [creatProductReviewMutation, { data, loading, error }] = useCreatProductReviewMutation({
+ *   variables: {
+ *      review: // value for 'review'
+ *   },
+ * });
+ */
+export function useCreatProductReviewMutation(baseOptions?: Apollo.MutationHookOptions<CreatProductReviewMutation, CreatProductReviewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatProductReviewMutation, CreatProductReviewMutationVariables>(CreatProductReviewDocument, options);
+      }
+export type CreatProductReviewMutationHookResult = ReturnType<typeof useCreatProductReviewMutation>;
+export type CreatProductReviewMutationResult = Apollo.MutationResult<CreatProductReviewMutation>;
+export type CreatProductReviewMutationOptions = Apollo.BaseMutationOptions<CreatProductReviewMutation, CreatProductReviewMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   products {
