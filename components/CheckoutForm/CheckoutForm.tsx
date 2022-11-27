@@ -1,6 +1,10 @@
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
+import {useForm} from "react-hook-form";
+import {yupResolver}  from '@hookform/resolvers/yup';
+import checkoutFormDataSchema, {CheckoutFormDataType} from "./CheckoutFormData.schema";
+import CheckoutFormInput from "./CheckoutFormInput";
 
 const products = [
     {
@@ -17,22 +21,14 @@ const products = [
     // More products...
 ]
 
-interface CheckoutFormData {
-    emailAddress: string;
-    nameOnCard: string;
-    cardNumber: string;
-    expirationDate: string;
-    cvc: string;
-    company: string;
-    address: string;
-    apartment: string;
-    city: string;
-    region: string;
-    postalCode: string;
-    sameAsShipping: boolean;
-}
-
 const CheckoutForm = () => {
+
+    const {register, formState, handleSubmit} = useForm<CheckoutFormDataType>({
+        resolver: yupResolver(checkoutFormDataSchema)
+    });
+    const onSubmit = handleSubmit((data) => {
+        console.log(data)
+    })
 
     return (
         <div className="bg-white">
@@ -152,7 +148,7 @@ const CheckoutForm = () => {
                     </div>
                 </section>
 
-                <form className="px-4 pt-16 pb-36 sm:px-6 lg:col-start-1 lg:row-start-1 lg:px-0 lg:pb-16">
+                <form onSubmit={onSubmit} className="px-4 pt-16 pb-36 sm:px-6 lg:col-start-1 lg:row-start-1 lg:px-0 lg:pb-16">
                     <div className="mx-auto max-w-lg lg:max-w-none">
                         <section aria-labelledby="contact-info-heading">
                             <h2 id="contact-info-heading" className="text-lg font-medium text-gray-900">
@@ -160,18 +156,17 @@ const CheckoutForm = () => {
                             </h2>
 
                             <div className="mt-6">
-                                <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
-                                    Email address
-                                </label>
-                                <div className="mt-1">
-                                    <input
-                                        type="email"
+                                    <CheckoutFormInput
                                         id="email-address"
+                                        label="Email Address"
                                         name="emailAddress"
+                                        type="email"
                                         autoComplete="email"
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
                                     />
-                                </div>
                             </div>
                         </section>
 
@@ -182,64 +177,58 @@ const CheckoutForm = () => {
 
                             <div className="mt-6 grid grid-cols-3 gap-y-6 gap-x-4 sm:grid-cols-4">
                                 <div className="col-span-3 sm:col-span-4">
-                                    <label htmlFor="name-on-card" className="block text-sm font-medium text-gray-700">
-                                        Name on card
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="name-on-card"
-                                            name="nameOnCard"
-                                            autoComplete="cc-name"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="name-on-card"
+                                        label="Name on card"
+                                        name="nameOnCard"
+                                        type="text"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
 
                                 <div className="col-span-3 sm:col-span-4">
-                                    <label htmlFor="card-number" className="block text-sm font-medium text-gray-700">
-                                        Card number
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="card-number"
-                                            name="cardNumber"
-                                            autoComplete="cc-number"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="card-number"
+                                        label="Card number"
+                                        name="cardNumber"
+                                        type="text"
+                                        autoComplete="cc-number"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
 
                                 <div className="col-span-2 sm:col-span-3">
-                                    <label htmlFor="expiration-date"
-                                           className="block text-sm font-medium text-gray-700">
-                                        Expiration date (MM/YY)
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            name="expirationDate"
-                                            id="expiration-date"
-                                            autoComplete="cc-exp"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="expiration-date"
+                                        label="Expiration date (MM/YY)"
+                                        name="expirationDate"
+                                        type="text"
+                                        autoComplete="cc-exp"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="cvc" className="block text-sm font-medium text-gray-700">
-                                        CVC
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            name="cvc"
-                                            id="cvc"
-                                            autoComplete="csc"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="cvc"
+                                        label="CVC"
+                                        name="cvc"
+                                        type="text"
+                                        autoComplete="csc"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </section>
@@ -251,91 +240,84 @@ const CheckoutForm = () => {
 
                             <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-3">
                                 <div className="sm:col-span-3">
-                                    <label htmlFor="company" className="block text-sm font-medium text-gray-700">
-                                        Company
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="company"
-                                            name="company"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="company"
+                                        label="company"
+                                        name="company"
+                                        type="text"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
 
                                 <div className="sm:col-span-3">
-                                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                                        Address
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="address"
-                                            name="address"
-                                            autoComplete="street-address"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="address"
+                                        label="Address"
+                                        name="address"
+                                        type="text"
+                                        autoComplete="street-address"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
 
                                 <div className="sm:col-span-3">
-                                    <label htmlFor="apartment" className="block text-sm font-medium text-gray-700">
-                                        Apartment, suite, etc.
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="apartment"
-                                            name="apartment"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="apartment"
+                                        label="Apartment, suite, etc."
+                                        name="apartment"
+                                        type="text"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                                        City
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="city"
-                                            name="city"
-                                            autoComplete="address-level2"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="city"
+                                        label="City"
+                                        name="city"
+                                        type="text"
+                                        autoComplete="address-level2"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="region" className="block text-sm font-medium text-gray-700">
-                                        State / Province
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="region"
-                                            name="region"
-                                            autoComplete="address-level1"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="region"
+                                        label="State / Province"
+                                        name="region"
+                                        type="text"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
-                                        Postal code
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="postal-code"
-                                            name="postalCode"
-                                            autoComplete="postal-code"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
+                                    <CheckoutFormInput
+                                        id="postal-code"
+                                        label="Postal code"
+                                        name="postalCode"
+                                        autoComplete="postal-code"
+                                        type="text"
+                                        useForm={{
+                                            register,
+                                            formState
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </section>
@@ -346,18 +328,16 @@ const CheckoutForm = () => {
                             </h2>
 
                             <div className="mt-6 flex items-center">
-                                <input
+                                <CheckoutFormInput
+                                    label="Same as shipping information"
                                     id="same-as-shipping"
                                     name="sameAsShipping"
                                     type="checkbox"
-                                    defaultChecked
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    useForm={{
+                                        register,
+                                        formState
+                                    }}
                                 />
-                                <div className="ml-2">
-                                    <label htmlFor="same-as-shipping" className="text-sm font-medium text-gray-900">
-                                        Same as shipping information
-                                    </label>
-                                </div>
                             </div>
                         </section>
 
