@@ -1,7 +1,16 @@
 import * as yup from "yup";
 
+yup.setLocale({
+    mixed: {
+        required: 'Pole jest wymagane.'
+    },
+    string: {
+        email: 'Adres e-mail jest nieprawidłowy.'
+    }
+});
+
 const checkoutFormDataSchema = yup.object().shape({
-    emailAddress: yup.string().required(),
+    emailAddress: yup.string().email().required(),
     nameOnCard: yup.string().required(),
     cardNumber: yup.string().required(),
     expirationDate: yup.string().required(),
