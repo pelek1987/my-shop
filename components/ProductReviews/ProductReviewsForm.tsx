@@ -1,13 +1,30 @@
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import productReviewFormInputSchema, {ProductReviewsFormInputType} from "./productReviewInputSchema";
+import {useCreatProductReviewMutation} from "../../graphql/generated/graphql";
 
 const ProductReviewsForm = ({ productSlug }: {productSlug: string}) => {
+
+    const [createProductReview] = useCreatProductReviewMutation();
+
     const {register, handleSubmit} = useForm<ProductReviewsFormInputType>({
         resolver: yupResolver(productReviewFormInputSchema)
     });
 
-    const onSubmit = handleSubmit((data) => {});
+    const onSubmit = handleSubmit((data) => {
+        createProductReview({
+            variables: {
+                review: {
+                    ...data,
+                    product: {
+                        connect: {
+                            slug: productSlug
+                        }
+                    }
+                }
+            }
+        })
+    });
     return (
         <form onSubmit={onSubmit} className="flex gap-4 flex-col items-center">
             <input
