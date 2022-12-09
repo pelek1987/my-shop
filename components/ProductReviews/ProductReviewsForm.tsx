@@ -1,11 +1,20 @@
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import productReviewFormInputSchema, {ProductReviewsFormInputType} from "./productReviewInputSchema";
-import {useCreatProductReviewMutation} from "../../graphql/generated/graphql";
+import {GetReviewsOfProductSlugDocument, useCreatProductReviewMutation} from "../../graphql/generated/graphql";
 
 const ProductReviewsForm = ({ productSlug }: {productSlug: string}) => {
 
-    const [createProductReview] = useCreatProductReviewMutation();
+    const [createProductReview] = useCreatProductReviewMutation({
+        refetchQueries: [
+            {
+                query: GetReviewsOfProductSlugDocument,
+                variables: {
+                    slug: productSlug
+                }
+            },
+        ]
+    });
 
     const {register, handleSubmit} = useForm<ProductReviewsFormInputType>({
         resolver: yupResolver(productReviewFormInputSchema)
