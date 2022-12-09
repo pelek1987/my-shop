@@ -3,7 +3,7 @@ import {Rating} from "../Rating";
 import {Product} from './Product.types'
 import {NextSeo} from "next-seo";
 import {CustomMarkdownComponent} from "../CustomMarkdownComponent";
-import ProductReviewsContainer from "../ProductReview/ProductReviewsContainer";
+import ProductReviewsContainer from "../ProductReviews/ProductReviewsContainer";
 
 export interface ProductDetailsProps {
     data: Product
