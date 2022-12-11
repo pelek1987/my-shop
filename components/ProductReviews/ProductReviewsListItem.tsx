@@ -4,8 +4,10 @@ interface ProductReviewsListItemProps {
     review: ReviewContentFragment
 }
 const ProductReviewsListItem = ({ review }: ProductReviewsListItemProps) => {
+    const isOptimisticElementView = review.id.startsWith('-');
+
     return (
-        <li className="border border-2 bg-white shadow-md rounded-md p-2 m-4">
+        <li className={`border border-2 bg-white shadow-md rounded-md p-2 m-4 ${isOptimisticElementView ? 'opacity-50' : ''}`}>
             <h3 className="font-bold">Headline: {review.headline}</h3>
             <div className="text-gray-500">Rating: {review.rating}</div>
             <p className="italic">Description: {review.content}</p>

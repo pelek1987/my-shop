@@ -1,19 +1,58 @@
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import productReviewFormInputSchema, {ProductReviewsFormInputType} from "./productReviewInputSchema";
-import {GetReviewsOfProductSlugDocument, useCreatProductReviewMutation} from "../../graphql/generated/graphql";
+import {
+    GetReviewsOfProductSlugDocument,
+    GetReviewsOfProductSlugQuery,
+    useCreatProductReviewMutation
+} from "../../graphql/generated/graphql";
+import product from "next-seo/lib/jsonld/product";
 
-const ProductReviewsForm = ({ productSlug }: {productSlug: string}) => {
+const ProductReviewsForm = ({productSlug}: { productSlug: string }) => {
 
     const [createProductReview] = useCreatProductReviewMutation({
-        refetchQueries: [
-            {
+        // refetchQueries: [
+        //     {
+        //         query: GetReviewsOfProductSlugDocument,
+        //         variables: {
+        //             slug: productSlug
+        //         }
+        //     },
+        // ]
+        update(cache, result) {
+            const cachedReviewsQuery = cache.readQuery<GetReviewsOfProductSlugQuery>({
                 query: GetReviewsOfProductSlugDocument,
                 variables: {
                     slug: productSlug
                 }
-            },
-        ]
+            })
+
+            if (!cachedReviewsQuery?.product?.reviews || !result.data?.createReview) {
+                // ...
+                return;
+            }
+
+            const newReviewsQuery = {
+                ...cachedReviewsQuery,
+                product: {
+                    ...cachedReviewsQuery.product,
+                    reviews: [
+                        ...cachedReviewsQuery.product.reviews,
+                        {
+                            ...result.data.createReview
+                        }
+                    ]
+                }
+            }
+
+            cache.writeQuery({
+                query: GetReviewsOfProductSlugDocument,
+                variables: {
+                    slug: productSlug
+                },
+                data: newReviewsQuery
+            })
+        }
     });
 
     const {register, handleSubmit} = useForm<ProductReviewsFormInputType>({
@@ -31,6 +70,14 @@ const ProductReviewsForm = ({ productSlug }: {productSlug: string}) => {
                         }
                     }
                 }
+            },
+            optimisticResponse: {
+                __typename: "Mutation",
+                createReview: {
+                    __typename: "Review",
+                    id: (-Math.random()).toString(),
+                    ...data
+                },
             }
         })
     });
