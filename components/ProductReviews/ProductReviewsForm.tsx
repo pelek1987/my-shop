@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 import productReviewFormInputSchema, {ProductReviewsFormInputType} from "./productReviewInputSchema";
 import {GetReviewsOfProductSlugDocument, useCreatProductReviewMutation} from "../../graphql/generated/graphql";
 
