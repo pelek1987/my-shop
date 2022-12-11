@@ -3,6 +3,7 @@ import {Rating} from "../Rating";
 import {Product} from './Product.types'
 import {NextSeo} from "next-seo";
 import {CustomMarkdownComponent} from "../CustomMarkdownComponent";
+import ProductReviewsContainer from "../ProductReviews/ProductReviewsContainer";
 
 export interface ProductDetailsProps {
     data: Product
@@ -47,6 +48,7 @@ const ProductDetails = ({data}: ProductDetailsProps) => {
                 </CustomMarkdownComponent>
             </div>
             <Rating rating={data.rating}/>
+            <ProductReviewsContainer productSlug={data.id}/>
         </>
     );
 };
