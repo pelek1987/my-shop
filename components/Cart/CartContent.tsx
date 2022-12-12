@@ -13,10 +13,20 @@ const CartContent = () => {
                 >
                     <div className="flex justify-between">
                         <div>{item.count} x {item.title}</div>
-                        <div>{item.price} <button className="ml-4 text-red-500" onClick={() => cartContext.removeItemFromCart(item.id)}><TrashIcon className="h-6 w-6" /></button></div>
+                        <div>{item.price}
+                            <button className="ml-4 text-red-500"
+                                    onClick={() => cartContext.removeItemFromCart(item.id)}><TrashIcon
+                                className="h-6 w-6"/></button>
+                        </div>
                     </div>
                 </li>)}
             </ul>
+            <button
+                type="submit"
+                className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+            >
+                Order
+            </button>
         </div>
     )
 }
