@@ -1,8 +1,47 @@
 import {useCartContext} from "./CartContext";
 import {TrashIcon} from "@heroicons/react/24/outline"
+import {loadStripe} from "@stripe/stripe-js";
+import {Stripe} from "stripe";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 const CartContent = () => {
     const cartContext = useCartContext();
+
+    const pay = async () => {
+        const stripe = await stripePromise
+
+        if (!stripe) {
+            throw new Error('Something went wrong.')
+        }
+        if (!cartContext.items) {
+            throw new Error('Could not confirm order.')
+        }
+
+        const stripeLineItems = cartContext.items.map(item => ({
+                price_data: {
+                    currency: 'PLN',
+                    unit_amount: item.price * 100,
+                    product_data: {
+                        name: item.title,
+                    },
+                },
+                quantity: item.count
+            }
+        ))
+
+        const res = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(stripeLineItems)
+        })
+
+        const { session }: { session: Stripe.Response<Stripe.Checkout.Session>} = await res.json();
+
+        await stripe.redirectToCheckout({ sessionId: session.id });
+    }
 
     return (
         <div className="col-span-2">
@@ -22,10 +61,11 @@ const CartContent = () => {
                 </li>)}
             </ul>
             <button
+                onClick={pay}
                 type="submit"
                 className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
             >
-                Order
+                Confirm Order
             </button>
         </div>
     )
