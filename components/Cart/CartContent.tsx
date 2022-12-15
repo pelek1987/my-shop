@@ -19,16 +19,9 @@ const CartContent = () => {
         }
 
         const stripeLineItems = cartContext.items.map(item => ({
-                price_data: {
-                    currency: 'PLN',
-                    unit_amount: item.price * 100,
-                    product_data: {
-                        name: item.title,
-                    },
-                },
-                quantity: item.count
-            }
-        ))
+            slug: item.id,
+            count: item.count
+        }))
 
         const res = await fetch('/api/checkout', {
             method: 'POST',
@@ -38,9 +31,9 @@ const CartContent = () => {
             body: JSON.stringify(stripeLineItems)
         })
 
-        const { session }: { session: Stripe.Response<Stripe.Checkout.Session>} = await res.json();
+        const {session}: { session: Stripe.Response<Stripe.Checkout.Session> } = await res.json();
 
-        await stripe.redirectToCheckout({ sessionId: session.id });
+        await stripe.redirectToCheckout({sessionId: session.id});
     }
 
     return (
